@@ -2,6 +2,7 @@ package org.judge.user.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.judge.Mapper;
 import org.judge.user.entity.UserEntity;
 import org.judge.user.pojo.User;
@@ -18,8 +19,8 @@ import java.util.logging.Level;
  * Created by manish on 10/02/17.
  * Implementation of UserService
  */
-@Log
 @Component
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         if(id == null) {
-            log.log(Level.SEVERE, "User Id is null");
+            log.error("User Id is null");
             throw new IllegalArgumentException("User's id cannot be null");
         }
         return mapper.convertValue(userRepository.findById(id), User.class);
@@ -40,10 +41,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByIdentity(UserIdentity userIdentity) {
         if(!userIdentity.valid()) {
-            log.log(Level.SEVERE, "UserIdentity invalid", userIdentity);
+            log.error("UserIdentity invalid {}", userIdentity);
             throw new IllegalArgumentException("User identity is invalid");
         }
-        return mapper.convertValue(userRepository.findByUserIdentity(userIdentity), User.class);
+        return mapper.convertValue(userRepository.findByUserIdentity(userIdentity.getType(), userIdentity.getIdentifier()), User.class);
     }
 
     @Override

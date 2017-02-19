@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @param userIdentity {@link UserIdentity}
      * @return userEntity {@link UserEntity}
      */
-    @Query("select user from UserEntity ue, UserIdentityEntity uie WHERE uie.type = userIdentity.type AND uir.identifier = userIdentity.identifier AND uie.user_id = ue.id ")
-    UserEntity findByUserIdentity(UserIdentity userIdentity);
+    @Query("SELECT u From UserEntity u , UserIdentityEntity ui WHERE u.id = ui.userId AND ui.type = ?1 AND ui.identifier = ?2")
+    UserEntity findByUserIdentity(String type, String identifier);
 
 }

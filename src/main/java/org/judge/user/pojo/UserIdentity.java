@@ -27,6 +27,8 @@ public class UserIdentity implements Serializable{
 
     String secret;
 
+    Long userId;
+
     Map<String, Object> properties;
 
     /**

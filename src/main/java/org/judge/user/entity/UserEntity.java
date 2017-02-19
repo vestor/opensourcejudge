@@ -26,10 +26,9 @@ public class UserEntity {
 
     /**
      * Normal Many to one relationship for maintaining multiple identities for a user.
-     * Got this idea from a friend @vaibhavsinha
+     * Got this idea from a friend @vaibhav-sinha
      */
-    @JoinColumn(name = "user_id",nullable = false)
-    @ManyToOne(targetEntity = UserIdentityEntity.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = UserIdentityEntity.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<UserIdentityEntity> identities;
 
 
